@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import '@xyflow/react/dist/style.css';
+import { CommandPalette } from '@/components/search/command-palette';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,6 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        {/* <CommandPalette /> */}
       </body>
     </html>
   );
