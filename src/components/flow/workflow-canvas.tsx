@@ -14,12 +14,6 @@ import {
 import { shallow } from 'zustand/shallow';
 import { ActionNode } from './nodes/action-node';
 
-const initialNodes = [
-    { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
-    { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
-];
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
-
 const nodeTypes = {
     action: ActionNode,
 };
@@ -29,7 +23,7 @@ const defaultEdgeOptions = {
     type: 'smoothstep'
 };
 
-const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
+const defaultViewport = { x: 0, y: 0, zoom: 1 };
 
 export function WorkflowCanvas() {
     const {
@@ -69,7 +63,7 @@ export function WorkflowCanvas() {
             >
                 <Background />
                 <Controls />
-                <Panel position="top-right">
+                <Panel position="bottom-right">
                     <div className="bg-background/60 backdrop-blur-sm p-2 rounded-md shadow-lg">
                         <p className="text-sm text-muted-foreground">
                             Drag and drop actions to create your workflow

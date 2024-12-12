@@ -39,6 +39,7 @@ export function CommandPalette() {
                         placeholder="Search for github actions..."
                     />
                     <Command.List className="mt-2">
+                        {/* <Command.Loading>Hang on…</Command.Loading> */}
                         <Command.Empty className="py-2 text-sm text-muted-foreground">
                             No results found.
                         </Command.Empty>
