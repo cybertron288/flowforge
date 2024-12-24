@@ -1,5 +1,5 @@
 import { db } from '@/db';
-import { workflows } from '@/db/schema';
+import { workflows } from '@/db/schema/schema';
 import { NextResponse } from 'next/server';
 
 export async function GET() {

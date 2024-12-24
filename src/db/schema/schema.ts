@@ -1,5 +1,5 @@
 // src/lib/db/schema.ts
-import { pgTable, serial, text, timestamp, jsonb } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp, jsonb, integer, boolean, uuid } from 'drizzle-orm/pg-core';
 
 export const workflows = pgTable('workflows', {
     id: serial('id').primaryKey(),
@@ -20,5 +20,23 @@ export const actionTemplates = pgTable('action_templates', {
     description: text('description'),
     inputs: jsonb('inputs').$type<Record<string, unknown>>(),
     metadata: jsonb('metadata').$type<Record<string, unknown>>(),
+    createdAt: timestamp('created_at').defaultNow(),
+});
+
+export const ActionList = pgTable('actions', {
+    uuid: uuid().defaultRandom().primaryKey(),
+    id: integer('id').notNull(),
+    name: text('name').notNull(),
+    description: text('description'),
+    slug: text('slug').notNull(),
+    ownerLogin: text('owner_login').notNull(),
+    type: text('type').notNull(),
+    color: text('color'),
+    iconSvg: text('icon_svg'),
+    stars: integer('stars').default(0),
+    isVerifiedOwner: boolean('is_verified_owner').default(false),
+    categories: jsonb('categories').$type<string[]>(),
+    externalUsesPathPrefix: text('external_uses_path_prefix'),
+    globalRelayId: text('global_relay_id'),
     createdAt: timestamp('created_at').defaultNow(),
 });

@@ -8,7 +8,8 @@ import {
     OnNodesChange,
     OnEdgesChange,
     Connection,
-    addEdge
+    addEdge,
+    Viewport
 } from '@xyflow/react';
 import yaml from 'js-yaml';
 
@@ -18,17 +19,25 @@ interface WorkflowState {
     onNodesChange: OnNodesChange;
     onEdgesChange: OnEdgesChange;
     onConnect: (connection: Connection) => void;
-    addNode: (node: Node) => void;
+    onViewportChange: (viewport: Viewport) => void
+    addNode: (node: Node | null) => void;
     clearWorkflow: () => void;
     exportToYAML: () => string;
+    viewport: Viewport;
 }
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
+const viewport: Viewport = {
+    x: 0,
+    y: 0,
+    zoom: 0,
+}
 
 export const useWorkflowStore = create<WorkflowState>((set, get) => ({
     nodes: initialNodes,
     edges: initialEdges,
+    viewport,
     onNodesChange: (changes) => {
         set((state) => ({
             nodes: applyNodeChanges(changes, state.nodes),
@@ -44,10 +53,25 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
             edges: addEdge(connection, state.edges),
         }));
     },
-    addNode: (node) => {
-        set((state) => ({
-            nodes: [...state.nodes, node],
-        }));
+    onViewportChange: (viewport: Viewport) => {
+        console.log("on change", viewport)
+        set({
+            viewport: viewport
+        })
+    },
+    addNode: (node: Node | null) => {
+        if (node) {
+            set((state) => ({
+                nodes: [...state?.nodes, node],
+            }));
+        }
+    },
+    setNode: (node: Node) => {
+        if (node) {
+            set((state) => ({
+                nodes: [...state?.nodes, node],
+            }));
+        }
     },
     clearWorkflow: () => {
         set({ nodes: [], edges: [] });

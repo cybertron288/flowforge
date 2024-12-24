@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import '@xyflow/react/dist/style.css';
-import { CommandPalette } from '@/components/search/command-palette';
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
+import "@xyflow/react/dist/style.css";
+import { CommandPalette } from "@/components/search/command-palette";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,11 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={` ${GeistSans.className} antialiased`}
-      >
-        {children}
-        {/* <CommandPalette /> */}
+      <body className={` ${GeistSans.className} antialiased`}>
+        <SidebarProvider>
+          <AppSidebar />
+          {children}
+          {/* <CommandPalette /> */}
+        </SidebarProvider>
       </body>
     </html>
   );
