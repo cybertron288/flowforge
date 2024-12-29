@@ -81,7 +81,7 @@ const data = {
 }
 
 export function CustomSidebar() {
-    const [selectedVersion, setSelectedVersion] = React.useState(data.versions[0])
+    // const [selectedVersion, setSelectedVersion] = React.useState(data.versions[0])
 
     return (
         <SidebarProvider>

@@ -7,11 +7,13 @@ import { useWorkflowStore } from "@/store/workflow-store";
 import { Command } from 'cmdk';
 import { useEffect, useState } from 'react';
 import { v4 } from "uuid";
+import { Loader } from "@/components/ui/loading-spinner";
 
 export function CommandPalette() {
     const [open, setOpen] = useState(false);
     const [actionList, setActionList] = useState<any[]>([]);
     const [filteredActionList, setFilteredActionList] = useState<any[]>([]); // Added filtered list state
+    const [isActionLoading, setIsActionLoading] = useState(false);
 
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
@@ -100,6 +102,7 @@ export function CommandPalette() {
     // Handle the command item selection
     const handleSelect = async (item: any) => {
         console.log(item);
+        setIsActionLoading(true);
         const repoPath = "https://github.com/" + item.externalUsesPathPrefix.replace("@", "")
         const actionInputs = await getActionYAMLInputs(item.ownerLogin, item.externalUsesPathPrefix.substring(
             item.externalUsesPathPrefix.indexOf("/") + 1,
@@ -118,8 +121,7 @@ export function CommandPalette() {
             },
             type: 'action',
         })
-
-
+        setIsActionLoading(false);
 
         console.log("%c repoPath>>>", "color: red; background: limegreen; padding: 6px", actionInputs, repoPath);
         setOpen(false);
@@ -210,8 +212,13 @@ export function CommandPalette() {
                             ))}
                         </Command.Group>
                     </Command.List>
-                    <div className="mt-2 flex justify-en border-t pt-1 text-primary">
-                        <div className="flex items-start gap-2 text-sm ">
+                    <div className="mt-2 flex justify-between items-center border-t pt-1 text-primary">
+
+                        <div>
+                            {isActionLoading && <Loader className="text-primary h-6" />}
+                        </div>
+
+                        <div className="flex items-center gap-2 text-sm h-6">
                             Add action to board
                             <kbd>↵</kbd>
                         </div>

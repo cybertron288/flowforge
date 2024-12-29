@@ -12,6 +12,8 @@ import {
     Viewport
 } from '@xyflow/react';
 import yaml from 'js-yaml';
+import { generateWorkflowFromData, } from "@/lib/yaml";
+import { getLatestVersion, getAllVersions } from "@/lib/github";
 
 interface WorkflowState {
     nodes: Node[];
@@ -23,6 +25,8 @@ interface WorkflowState {
     addNode: (node: Node | null) => void;
     clearWorkflow: () => void;
     exportToYAML: () => string;
+    generateWorkflow: () => string;
+    listVersions: () => [string];
     viewport: Viewport;
 }
 
@@ -91,6 +95,17 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
                 target: edge.target
             }))
         };
+        console.log("workflow", workflow)
         return yaml.dump(workflow);
     },
+    generateWorkflow: () => {
+        const state = get();
+        const workflow = generateWorkflowFromData(state);
+        return workflow;
+    },
+    listVersions: async () => {
+        const state = get();
+        const workflow = await getAllVersions(state.nodes[0]?.data?.repoPath);
+        return workflow;
+    }
 }));

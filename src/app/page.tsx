@@ -9,8 +9,9 @@ import { useWorkflowStore } from '@/store/workflow-store';
 import { ActionConfigureDrawer } from "@/components/drawers";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { PropertiesPanel } from "@/components/properties-panel";
+import { PropertiesPanel } from "@/components/flow/workflow-properties/properties-panel";
 import { v4 } from "uuid";
+
 
 const POSITION = { x: Math.random() * 500, y: Math.random() * 300 };
 
@@ -155,7 +156,7 @@ const NEW_NODE_DATA = [
 ]
 
 export default function Home() {
-  const { addNode, exportToYAML } = useWorkflowStore();
+  const { addNode, exportToYAML, generateWorkflow, listVersions } = useWorkflowStore();
 
   const handleAddNode = () => {
     const position = { x: Math.random() * 500, y: Math.random() * 300 };
@@ -168,7 +169,8 @@ export default function Home() {
   };
 
   const handleExportYAML = () => {
-    const yamlContent = exportToYAML();
+    const yamlContent = generateWorkflow();
+    console.log("workflow data", yamlContent)
     const blob = new Blob([yamlContent], { type: 'text/yaml' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -179,6 +181,11 @@ export default function Home() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
+
+  const handleListVersions = async () => {
+    const versions = await listVersions()
+    console.log("versions", versions)
+  }
 
   return (
     <div className="flex h-screen flex-col flex-1">
@@ -197,9 +204,14 @@ export default function Home() {
               <PlusIcon className="h-4 w-4 mr-2" />
               New Workflow Node
             </Button>
+
             <Button variant="outline" size="sm" onClick={handleExportYAML}>
               <DownloadIcon className="h-4 w-4 mr-2" />
               Export YAML
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleListVersions}>
+              <DownloadIcon className="h-4 w-4 mr-2" />
+              List Versions
             </Button>
           </div>
         </div>

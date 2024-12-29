@@ -215,3 +215,111 @@ export async function getActionYAMLInputs(owner: string, repo: string, path: str
         return '';
     }
 }
+
+
+export async function getLatestVersion(repoUrl: string): Promise<string> {
+    try {
+        // Parse the repository URL
+        const match = repoUrl.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)$/);
+        if (!match) {
+            throw new Error("Invalid repository URL. Use the format 'https://github.com/owner/repo'.");
+        }
+
+        const [, owner, repo] = match;
+
+        // Step 1: Fetch all tags
+        const tagsResponse = await octokit.rest.repos.listTags({
+            owner,
+            repo,
+            per_page: 100,
+        });
+
+        if (tagsResponse.data.length > 0) {
+            // Sort tags (assumes semantic versioning) and return the latest
+            const latestTag = tagsResponse.data.sort((a, b) =>
+                b.name.localeCompare(a.name, undefined, { numeric: true })
+            )[0];
+            return latestTag.name;
+        }
+
+        // Step 2: Fetch releases if no tags are found
+        const releasesResponse = await octokit.rest.repos.listReleases({
+            owner,
+            repo,
+            per_page: 100,
+        });
+
+        if (releasesResponse.data.length > 0) {
+            // Find the latest published release
+            const latestRelease = releasesResponse.data.find(release => !release.draft && !release.prerelease);
+            if (latestRelease) return latestRelease.tag_name;
+        }
+
+        // Step 3: Fetch default branch as a fallback
+        const repoResponse = await octokit.rest.repos.get({
+            owner,
+            repo,
+        });
+
+        return repoResponse.data.default_branch; // Usually 'main' or 'master'
+    } catch (error) {
+        console.error("Error fetching version:", error);
+        throw new Error("Failed to fetch the latest version for the repository.");
+    }
+}
+
+
+
+
+
+export async function getAllVersions(repoUrl: string): Promise<{ versions: string[], branches: string[] }> {
+    try {
+        // Parse the repository URL
+        const match = repoUrl.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)$/);
+        if (!match) {
+            throw new Error("Invalid repository URL. Use the format 'https://github.com/owner/repo'.");
+        }
+
+        const [, owner, repo] = match;
+
+        // Initialize arrays to hold versions and branches
+        const versions: string[] = [];
+        const branches: string[] = [];
+
+        // Step 1: Fetch all tags (versions)
+        const tagsResponse = await octokit.rest.repos.listTags({
+            owner,
+            repo,
+            per_page: 100,
+        });
+        tagsResponse.data.forEach(tag => versions.push(tag.name));
+
+        // Step 2: Fetch releases (versions)
+        const releasesResponse = await octokit.rest.repos.listReleases({
+            owner,
+            repo,
+            per_page: 100,
+        });
+        releasesResponse.data.forEach(release => {
+            if (!release.draft && !release.prerelease) {
+                versions.push(release.tag_name);
+            }
+        });
+
+        // Step 3: Fetch branches
+        const branchesResponse = await octokit.rest.repos.listBranches({
+            owner,
+            repo,
+            per_page: 100,
+        });
+        branchesResponse.data.forEach(branch => branches.push(branch.name));
+
+        // Remove duplicates in versions array by converting to Set and back to array
+        const uniqueVersions = Array.from(new Set(versions));
+
+        return { versions: uniqueVersions, branches };
+    } catch (error) {
+        console.error("Error fetching versions and branches:", error);
+        throw new Error("Failed to fetch versions and branches for the repository.");
+    }
+}
