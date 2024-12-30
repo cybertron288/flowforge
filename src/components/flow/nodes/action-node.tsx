@@ -72,7 +72,7 @@ export function ActionNode({ data, isConnectable, selected }: NodeProps<ActionNo
     return (
         <Card
             // Highlight the card with a blue border when the node is selected
-            className={`w-[280px] bg-white shadow-lg cursor-default transition-all ${selected ? " outline-dotted outline-1" : ""
+            className={`w-[280px] bg-white shadow-lg cursor-default border-0 transition-all ${selected ? " outline-dotted outline-1" : ""
                 }`}
         >
             <Handle

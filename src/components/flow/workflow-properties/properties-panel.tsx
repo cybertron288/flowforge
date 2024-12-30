@@ -8,13 +8,14 @@ import { Label } from "@/components/ui/label";
 import { useDrawerStore } from "@/store/drawer-store";
 import ScrollArrows from "@/components/ui/scroll-to-buttons";
 import { BranchVersionDropdown } from "@/components/flow/workflow-properties/dropdown";
+import { SkeletonLoader } from "@/components/flow/workflow-properties/skeleton-loader";
 
 interface FormValues {
     [key: string]: any; // Adjust this type based on your form's data shape
 }
 
 export function PropertiesPanel() {
-    const { isActionConfigureDrawerOpen, closeActionConfigureDrawer, actionData, workflowVersionsAndBranches } = useDrawerStore();
+    const { isActionConfigureDrawerOpen, closeActionConfigureDrawer, actionData, workflowVersionsAndBranches, isActionDataLoading } = useDrawerStore();
 
     const { handleSubmit, control, register, formState: { errors } } = useForm<FormValues>({
         defaultValues: actionData?.actionInputs
@@ -45,7 +46,11 @@ export function PropertiesPanel() {
 
     return (
         <div className="w-[450px] border-l border-sidebar-border relative h-[calc(100vh_-_58px)] p-2 pb-0 break-words overflow-auto">
-            {actionData ? (
+            {isActionDataLoading ? (
+                <div className="flex-1 flex items-center justify-center">
+                    <SkeletonLoader />
+                </div>
+            ) : actionData ? (
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 h-full flex flex-col">
                     <div className="flex flex-col">
                         <Label className="font-bold text-lg">{actionData?.name}</Label>
@@ -98,8 +103,11 @@ export function PropertiesPanel() {
                         <Button type="submit">Save</Button>
                     </div>
                 </form>
-            ) : <div className="flex-1 flex items-center justify-center">
-                <span className="text-base font-semibold">No action selected.</span></div>}
+            ) : (
+                <div className="flex-1 flex items-center justify-center">
+                    <span className="text-base font-semibold">No action selected.</span>
+                </div>
+            )}
         </div>
     );
 }

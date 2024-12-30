@@ -26,7 +26,6 @@ interface WorkflowState {
     clearWorkflow: () => void;
     exportToYAML: () => string;
     generateWorkflow: () => string;
-    listVersions: () => [string];
     viewport: Viewport;
 }
 
@@ -101,11 +100,6 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
     generateWorkflow: () => {
         const state = get();
         const workflow = generateWorkflowFromData(state);
-        return workflow;
-    },
-    listVersions: async () => {
-        const state = get();
-        const workflow = await getAllVersions(state.nodes[0]?.data?.repoPath);
         return workflow;
     }
 }));

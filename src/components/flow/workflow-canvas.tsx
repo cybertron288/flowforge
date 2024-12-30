@@ -81,7 +81,8 @@ export function WorkflowCanvas() {
                 <Panel position="bottom-right">
                     <div className="bg-background/60 backdrop-blur-sm p-2 rounded-md shadow-lg">
                         <p className="text-sm text-muted-foreground">
-                            Drag and drop actions to create your workflow
+                            Press <kbd className="px-2 py-1 bg-muted rounded">⌘</kbd> +{' '}
+                            <kbd className="px-2 py-1 bg-muted rounded">K</kbd> to search actions
                         </p>
                     </div>
                 </Panel>

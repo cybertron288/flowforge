@@ -8,6 +8,7 @@ import { Command } from 'cmdk';
 import { useEffect, useState } from 'react';
 import { v4 } from "uuid";
 import { Loader } from "@/components/ui/loading-spinner";
+import { Input } from "@/components/ui/input";
 
 export function CommandPalette() {
     const [open, setOpen] = useState(false);
@@ -155,12 +156,17 @@ export function CommandPalette() {
                     "bg-foreground/15"
                 )}
             >
-                <div className="w-full max-w-lg p-2 bg-card rounded-xl shadow-sm">
-                    <input
-                        className="w-full p-2 text-sm text-foreground bg-input border border-border rounded-md focus:outline-none"
+                <div className="w-full max-w-lg p-2 bg-card relative rounded-xl shadow-sm">
+                    <Input
+                        className="w-full p-2 text-sm text-foreground border border-border rounded-md focus:outline-none"
                         placeholder="Search for GitHub actions..."
                         onChange={(e) => handleSearch(e.target.value)}
                     />
+                    {isActionLoading && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-10">
+                            <Loader className="text-primary h-6" />
+                        </div>
+                    )}
                     <Command.List
                         className="mt-2 overflow-y-auto max-h-96"
                         onScroll={handleScroll} // Adding infinite scroll
@@ -212,11 +218,8 @@ export function CommandPalette() {
                             ))}
                         </Command.Group>
                     </Command.List>
-                    <div className="mt-2 flex justify-between items-center border-t pt-1 text-primary">
+                    <div className="mt-2 flex justify-end items-center border-t pt-1 text-primary">
 
-                        <div>
-                            {isActionLoading && <Loader className="text-primary h-6" />}
-                        </div>
 
                         <div className="flex items-center gap-2 text-sm h-6">
                             Add action to board
