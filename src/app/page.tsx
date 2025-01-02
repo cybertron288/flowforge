@@ -1,14 +1,12 @@
 "use client";
 
-import { WorkflowCanvas } from "@/components/flow/workflow-canvas";
-import { CommandPalette } from "@/components/search/command-palette";
-
-import { PropertiesPanel } from "@/components/flow/workflow-properties/properties-panel";
 import { ReactFlowProvider } from "@xyflow/react";
 
+import { WorkflowCanvas } from "@/components/flow/workflow-canvas";
+import { PropertiesPanel } from "@/components/flow/workflow-properties/properties-panel";
+import { CommandPalette } from "@/components/search/command-palette";
 import { Navbar } from "@/components/ui/navbar";
 
-const POSITION = { x: Math.random() * 500, y: Math.random() * 300 };
 
 export default function Home() {
   return (

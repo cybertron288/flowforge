@@ -1,11 +1,7 @@
 import { Octokit } from '@octokit/rest';
-import { getRequiredInputsFromGitHubAction } from "./yaml";
 
-const octokit = new Octokit(
-    process.env.GITHUB_TOKEN
-        ? { auth: process.env.GITHUB_TOKEN }
-        : undefined
-);
+import { getRequiredInputsFromGitHubAction } from "@/lib/yaml";
+
 
 export interface WorkflowInput {
     name: string;
@@ -47,6 +43,12 @@ export interface GitHubActionRepo {
     topics: string[];
     stargazers_count: number;
 }
+
+const octokit = new Octokit(
+    process.env.GITHUB_TOKEN
+        ? { auth: process.env.GITHUB_TOKEN }
+        : undefined
+);
 
 export async function searchGitHubActions(query: string): Promise<GitHubAction[]> {
     if (!query || query.length < 2) return [];

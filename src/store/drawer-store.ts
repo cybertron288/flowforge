@@ -1,6 +1,7 @@
 // src/store/workflow-store.ts
-import { getAllVersions } from "@/lib/github";
 import { create } from 'zustand';
+
+import { getAllVersions } from "@/lib/github";
 
 
 interface DrawerState {
@@ -11,7 +12,6 @@ interface DrawerState {
     workflowVersionsAndBranches?: any;
     isActionDataLoading: boolean
 }
-
 
 export const useDrawerStore = create<DrawerState>((set, get) => ({
     isActionConfigureDrawerOpen: false,

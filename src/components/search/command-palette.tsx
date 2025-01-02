@@ -1,14 +1,16 @@
 'use client';
 
+import { Command } from 'cmdk';
+import { useEffect, useState } from 'react';
+import { v4 } from "uuid";
+
+import { Input } from "@/components/ui/input";
+import { Loader } from "@/components/ui/loading-spinner";
 import { useApi } from "@/hooks/useApi";
 import { getActionYAMLInputs } from "@/lib/github";
 import { cn } from "@/lib/utils";
 import { useWorkflowStore } from "@/store/workflow-store";
-import { Command } from 'cmdk';
-import { useEffect, useState } from 'react';
-import { v4 } from "uuid";
-import { Loader } from "@/components/ui/loading-spinner";
-import { Input } from "@/components/ui/input";
+
 
 export function CommandPalette() {
     const [open, setOpen] = useState(false);

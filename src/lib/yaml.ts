@@ -1,5 +1,5 @@
-import fs from 'fs';
 import yaml from 'yaml';
+
 
 export function getRequiredInputsFromGitHubAction(fileContent) {
     try {
@@ -16,7 +16,7 @@ export function getRequiredInputsFromGitHubAction(fileContent) {
 
         return inputs;
     } catch (error) {
-        console.error('Error reading or parsing the YAML file:', error.message);
+        console.error('Error reading or parsing the YAML file:', error?.message);
         return [];
     }
 }

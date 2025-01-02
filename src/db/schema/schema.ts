@@ -1,6 +1,7 @@
 // src/lib/db/schema.ts
 import { pgTable, serial, text, timestamp, jsonb, integer, boolean, uuid } from 'drizzle-orm/pg-core';
 
+
 export const workflows = pgTable('workflows', {
     id: serial('id').primaryKey(),
     name: text('name').notNull(),

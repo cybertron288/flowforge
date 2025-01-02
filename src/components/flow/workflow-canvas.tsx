@@ -1,18 +1,20 @@
 // src/components/flow/workflow-canvas.tsx
 'use client';
 
-import { useWorkflowStore } from '@/store/workflow-store';
-import { useCallback, useEffect } from 'react';
 import {
     Background,
+    Connection,
     ConnectionMode,
     Controls,
     Panel,
     ReactFlow,
-    Connection, useReactFlow, Viewport
+    useReactFlow, Viewport
 } from '@xyflow/react';
-import { shallow } from 'zustand/shallow';
-import { ActionNode } from './nodes/action-node';
+import { useCallback, useEffect } from 'react';
+
+import { useWorkflowStore } from '@/store/workflow-store';
+import { ActionNode } from '@/components/flow/nodes/action-node';
+
 
 const nodeTypes = {
     action: ActionNode,
@@ -53,11 +55,6 @@ export function WorkflowCanvas() {
         // console.log("zoom level", e)
         onViewportChange(e)
     }
-
-    useEffect(() => {
-        console.log("zoom", getZoom(), getViewport());
-
-    }, [getZoom(), getViewport()])
 
     return (
         <div className="w-full h-full">
