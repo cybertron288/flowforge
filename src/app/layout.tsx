@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import "@xyflow/react/dist/style.css";
-import { CommandPalette } from "@/components/search/command-palette";
+import { CommandPalette } from "@/components/command-palette.";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";

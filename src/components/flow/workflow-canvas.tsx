@@ -14,10 +14,13 @@ import { useCallback, useEffect } from 'react';
 
 import { useWorkflowStore } from '@/store/workflow-store';
 import { ActionNode } from '@/components/flow/nodes/action-node';
-
+import { StartNode } from '@/components/flow/nodes/start-node';
+import { EndNode } from '@/components/flow/nodes/end-node';
 
 const nodeTypes = {
     action: ActionNode,
+    start: StartNode,
+    end: EndNode
 };
 
 const defaultEdgeOptions = {

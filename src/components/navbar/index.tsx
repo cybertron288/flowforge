@@ -1,4 +1,4 @@
-import { NavUser } from "@/components/nav-user";
+import { NavUser } from "@/components/navbar/nav-user";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useWorkflowStore } from "@/store/workflow-store";

@@ -1,5 +1,5 @@
 // src/store/workflow-store.ts
-import { create } from 'zustand';
+import { create } from "zustand";
 import {
     Node,
     Edge,
@@ -9,12 +9,13 @@ import {
     OnEdgesChange,
     Connection,
     addEdge,
-    Viewport
-} from '@xyflow/react';
-import yaml from 'js-yaml';
+    Viewport,
+} from "@xyflow/react";
+import yaml from "js-yaml";
 
-import { generateWorkflowFromData, } from "@/lib/yaml";
+import { generateWorkflowFromData } from "@/lib/yaml";
 import { getLatestVersion, getAllVersions } from "@/lib/github";
+import { v4 } from "uuid";
 
 interface WorkflowState {
     nodes: Node[];
@@ -22,7 +23,7 @@ interface WorkflowState {
     onNodesChange: OnNodesChange;
     onEdgesChange: OnEdgesChange;
     onConnect: (connection: Connection) => void;
-    onViewportChange: (viewport: Viewport) => void
+    onViewportChange: (viewport: Viewport) => void;
     addNode: (node: Node | null) => void;
     clearWorkflow: () => void;
     exportToYAML: () => string;
@@ -30,13 +31,28 @@ interface WorkflowState {
     viewport: Viewport;
 }
 
-const initialNodes: Node[] = [];
+const initialNodes: Node[] = [
+    {
+        position: { x: -100, y: -300 },
+        id: v4(),
+        data: { name: "Start" },
+        type: "start",
+        deletable: false,
+    },
+    {
+        position: { x: 100, y: 300 },
+        id: v4(),
+        data: { name: "End" },
+        type: "end",
+        deletable: false,
+    },
+];
 const initialEdges: Edge[] = [];
 const viewport: Viewport = {
     x: 0,
     y: 0,
     zoom: 0,
-}
+};
 
 export const useWorkflowStore = create<WorkflowState>((set, get) => ({
     nodes: initialNodes,
@@ -58,10 +74,10 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
         }));
     },
     onViewportChange: (viewport: Viewport) => {
-        console.log("on change", viewport)
+        console.log("on change", viewport);
         set({
-            viewport: viewport
-        })
+            viewport: viewport,
+        });
     },
     addNode: (node: Node | null) => {
         if (node) {
@@ -83,24 +99,24 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
     exportToYAML: () => {
         const state = get();
         const workflow = {
-            nodes: state.nodes.map(node => ({
+            nodes: state.nodes.map((node) => ({
                 id: node.id,
                 type: node.type,
                 data: node.data,
-                position: node.position
+                position: node.position,
             })),
-            edges: state.edges.map(edge => ({
+            edges: state.edges.map((edge) => ({
                 id: edge.id,
                 source: edge.source,
-                target: edge.target
-            }))
+                target: edge.target,
+            })),
         };
-        console.log("workflow", workflow)
+        console.log("workflow", workflow);
         return yaml.dump(workflow);
     },
     generateWorkflow: () => {
         const state = get();
         const workflow = generateWorkflowFromData(state);
         return workflow;
-    }
+    },
 }));

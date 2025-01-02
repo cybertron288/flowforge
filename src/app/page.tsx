@@ -4,8 +4,8 @@ import { ReactFlowProvider } from "@xyflow/react";
 
 import { WorkflowCanvas } from "@/components/flow/workflow-canvas";
 import { PropertiesPanel } from "@/components/flow/workflow-properties/properties-panel";
-import { CommandPalette } from "@/components/search/command-palette";
-import { Navbar } from "@/components/ui/navbar";
+import { CommandPalette } from "@/components/command-palette/index.";
+import { Navbar } from "@/components/navbar";
 
 
 export default function Home() {
