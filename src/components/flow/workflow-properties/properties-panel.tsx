@@ -9,11 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ScrollArrows from "@/components/ui/scroll-to-buttons";
-import { useDrawerStore } from "@/store/drawer-store";
+import { useDrawerStore } from "@/stores/drawer-store";
 
 
 interface FormValues {
-    [key: string]: any; // Adjust this type based on your form's data shape
+    [key: string]: string; // Adjust this type based on your form's data shape
 }
 
 export function PropertiesPanel() {
@@ -28,8 +28,11 @@ export function PropertiesPanel() {
             : {},
     });
 
-    const onSubmit = (data: FormValues) => {
-        console.log("Form submitted with data:", data);
+    const onSubmit = (data: FormValues, actionData: any) => {
+        console.log("Form submitted with data:", data, actionData);
+
+        // send data to server here
+
         closeActionConfigureDrawer();
     };
 
@@ -53,7 +56,7 @@ export function PropertiesPanel() {
                     <SkeletonLoader />
                 </div>
             ) : actionData ? (
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 h-full flex flex-col">
+                <form onSubmit={handleSubmit((data) => onSubmit(data, actionData))} className="space-y-4 h-full flex flex-col">
                     <div className="flex flex-col">
                         <Label className="font-bold text-lg">{actionData?.name}</Label>
                         <Label className="text-sm">Action Properties</Label>
@@ -63,7 +66,7 @@ export function PropertiesPanel() {
                         <div>
                             <Label className="capitalize" >
                                 Select Version or Branch {" "}
-                                <span className="text-[#dc2626]">*</span>
+                                <span className="text-destructive">*</span>
                             </Label>
                             <BranchVersionDropdown data={workflowVersionsAndBranches} control={control}
                                 name="branchVersion"
@@ -78,7 +81,7 @@ export function PropertiesPanel() {
                                         <div key={key} className="">
                                             <Label className="capitalize" htmlFor={key}>
                                                 {key.replace("_", " ").replace("-", " ")}{" "}
-                                                {isRequired && <span className="text-[#dc2626]">*</span>}
+                                                {isRequired && <span className="text-destructive">*</span>}
                                             </Label>
                                             <Controller
                                                 name={key}
@@ -93,7 +96,7 @@ export function PropertiesPanel() {
                                                 )}
                                             />
                                             {errors[key] && (
-                                                <span className="text-[10px] font-semibold text-red-500">This field is required.</span>
+                                                <span className="text-[10px] font-semibold text-destructive">This field is required.</span>
                                             )}
                                         </div>
                                     );

@@ -1,18 +1,19 @@
 "use client";
 
+import { Handle, NodeProps, Position } from "@xyflow/react";
+import { Link, PlayIcon, Settings } from "lucide-react";
+import { useEffect, useState } from "react";
+
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useDebounce } from "@/hooks/use-debounce";
 import { GitHubAction, searchGitHubActions } from "@/lib/github";
-import { useWorkflowStore } from "@/store/workflow-store";
-import { Handle, NodeProps, Position } from "@xyflow/react";
-import { PlayIcon, Cog, Link, Play, Settings } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useWorkflowStore } from "@/stores/workflow-store";
+import { useDrawerStore } from "@/stores/drawer-store";
 
 import "@reach/combobox/styles.css";
-import { useDrawerStore } from "@/store/drawer-store";
 
 interface ActionNodeData {
     label: string;

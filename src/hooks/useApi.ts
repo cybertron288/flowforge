@@ -12,22 +12,23 @@ export const useApi = () => {
                     body: body ? JSON.stringify(body) : undefined,
                 });
 
+                const data = await response.json();
+
                 if (!response.ok) {
                     console.error(`HTTP error! status: ${response.status}`);
                     return {
                         success: false,
                         status: response.status,
-                        message: `HTTP error! status: ${response.status}`,
+                        message: data.message,
                         data: null,
                     };
                 }
 
-                const data = await response.json();
                 return {
                     success: true,
                     status: response.status,
-                    message: 'Request successful',
-                    response: data,
+                    message: data.message,
+                    response: data.data,
                 };
             } catch (error: any) {
                 console.error('API call failed:', error);

@@ -1,6 +1,7 @@
-import { db } from '@/db';
-import { workflows } from '@/db/schema/schema';
 import { NextResponse } from 'next/server';
+
+import { db } from '@/db';
+import { workflows } from '@/db/schema';
 
 export async function GET() {
     const allWorkflows = await db.select().from(workflows);

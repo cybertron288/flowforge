@@ -23,10 +23,12 @@ export function getRequiredInputsFromGitHubAction(fileContent) {
 
 // Helper to generate workflow
 export const generateWorkflowFromData = (data) => {
+    // get input values for workflow from server before generating the workflow
+
     const { nodes, edges } = data;
 
     // Create a map of nodes by their IDs for easy lookup
-    const nodeMap = new Map(nodes.map((node) => [node.id, node]));
+    const nodeMap = new Map(nodes.filter(node => node.type !== "start" && node.type !== "end").map((node) => [node.id, node]));
 
     // Get the ordered steps based on edges
     const getOrderedSteps = () => {
