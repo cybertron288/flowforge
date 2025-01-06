@@ -1,13 +1,25 @@
-// src/lib/db/schema.ts
-import { pgTable, serial, text, timestamp, jsonb, integer, boolean, uuid } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, uniqueIndex, timestamp, jsonb, integer, boolean, uuid } from 'drizzle-orm/pg-core';
 
+export const users = pgTable('users', {
+    id: uuid('id').primaryKey(),
+    firstName: text('first_name').notNull(),
+    lastName: text('last_name').notNull(),
+    email: text('email').notNull(),
+    password: text('password'),
+    oauthProvider: text("oauth_provider"),
+    oauthProviderId: text("oauth_provider_id"),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (users) => ({
+    emailIndex: uniqueIndex('email_idx').on(users.email),
+}));
 
 export const workflows = pgTable('workflows', {
     id: serial('id').primaryKey(),
     name: text('name').notNull(),
     description: text('description'),
     nodes: jsonb('nodes').$type<FlowNode[]>(),
-    edges: jsonb('edges').$type<FlowEdge[]>(),
+    edges: jsonb('edges').$type<FlowEdge[]>().notNull(),
     yamlContent: text('yaml_content'),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
@@ -26,7 +38,7 @@ export const actionTemplates = pgTable('action_templates', {
 
 export const ActionList = pgTable('actions', {
     uuid: uuid().defaultRandom().primaryKey(),
-    id: integer('id').notNull(),
+    id: serial('id').notNull(),
     name: text('name').notNull(),
     description: text('description'),
     slug: text('slug').notNull(),

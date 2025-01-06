@@ -1,29 +1,79 @@
-"use client";
+'use client';
 
-import { ReactFlowProvider } from "@xyflow/react";
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import { WorkflowCanvas } from "@/components/flow/workflow-canvas";
-import { PropertiesPanel } from "@/components/flow/workflow-properties/properties-panel";
-import { CommandPalette } from "@/components/command-palette/index.";
-import { Navbar } from "@/components/navbar";
+type LoginFormInputs = {
+  email: string;
+  password: string;
+};
 
+export default function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormInputs>();
 
-export default function Home() {
+  const [error, setError] = useState('');
+
+  const onSubmit = async (data: LoginFormInputs) => {
+    setError('');
+
+    const result = await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: false, // Handle errors manually
+    });
+
+    if (result?.error) {
+      setError(result.error);
+    } else {
+      // Redirect to the dashboard or desired page
+      window.location.href = '/dashboard';
+    }
+  };
+
   return (
-    <div className="flex h-screen flex-col flex-1">
-      <Navbar />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-4"
+    >
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium">
+          Email
+        </label>
+        <input
+          id="email"
+          type="email"
+          {...register('email', { required: 'Email is required' })}
+          className="p-2 border rounded w-full"
+        />
+        {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+      </div>
 
-      {/* Main Content */}
-      <main className="flex-1 flex">
-        <ReactFlowProvider>
-          <WorkflowCanvas />
-        </ReactFlowProvider>
-        <PropertiesPanel />
-      </main>
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium">
+          Password
+        </label>
+        <input
+          id="password"
+          type="password"
+          {...register('password', { required: 'Password is required' })}
+          className="p-2 border rounded w-full"
+        />
+        {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+      </div>
 
-      {/* Command Palette */}
-      <CommandPalette />
-      {/* <ActionConfigureDrawer /> */}
-    </div>
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+
+      <button
+        type="submit"
+        className="p-2 bg-blue-500 text-white rounded"
+      >
+        Login
+      </button>
+    </form>
   );
 }

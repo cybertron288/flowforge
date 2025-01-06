@@ -1,4 +1,3 @@
-// src/components/flow/workflow-canvas.tsx
 'use client';
 
 import {
@@ -10,12 +9,12 @@ import {
     ReactFlow,
     useReactFlow, Viewport
 } from '@xyflow/react';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
-import { useWorkflowStore } from '@/store/workflow-store';
 import { ActionNode } from '@/components/flow/nodes/action-node';
-import { StartNode } from '@/components/flow/nodes/start-node';
 import { EndNode } from '@/components/flow/nodes/end-node';
+import { StartNode } from '@/components/flow/nodes/start-node';
+import { useWorkflowStore } from '@/stores/workflow-store';
 
 const nodeTypes = {
     action: ActionNode,

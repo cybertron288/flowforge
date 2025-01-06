@@ -1,5 +1,5 @@
 import { db } from '@/db';
-import { ActionList } from '@/db/schema/schema';
+import { ActionList } from '@/db/schema';
 
 const BATCH_SIZE = 100; // Define the size of each batch for insertion
 const MAX_RETRIES = 5; // Maximum number of retries per request

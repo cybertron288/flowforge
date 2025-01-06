@@ -1,11 +1,10 @@
 "use client"
 
-import { useState } from 'react'
+import { DynamicSideDrawer } from '@/components/dynamic-side-drawer'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { DynamicSideDrawer } from '@/components/dynamic-side-drawer'
-import { useDrawerStore } from '@/store/drawer-store'
+import { useDrawerStore } from '@/stores/drawer-store'
 
 export default function ActionConfigure() {
     const { isActionConfigureDrawerOpen, closeActionConfigureDrawer, actionData } = useDrawerStore()

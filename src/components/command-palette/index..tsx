@@ -9,7 +9,7 @@ import { Loader } from "@/components/ui/loading-spinner";
 import { useApi } from "@/hooks/useApi";
 import { getActionYAMLInputs } from "@/lib/github";
 import { cn } from "@/lib/utils";
-import { useWorkflowStore } from "@/store/workflow-store";
+import { useWorkflowStore } from "@/stores/workflow-store";
 
 
 export function CommandPalette() {
@@ -111,7 +111,7 @@ export function CommandPalette() {
             item.externalUsesPathPrefix.indexOf("/") + 1,
             item.externalUsesPathPrefix.lastIndexOf("@"),
         ), "")
-        const position = { x: Math.random() * 500, y: Math.random() * 300 };
+        const position = { x: Math.random() * 100, y: Math.random() * 100 };
 
 
         addNode({

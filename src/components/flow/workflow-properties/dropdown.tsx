@@ -1,11 +1,10 @@
 "use client"
 
-import * as React from "react"
 import { Check, ChevronsUpDown, Search } from 'lucide-react'
-import { useController, Control } from "react-hook-form"
+import * as React from "react"
+import { Control, useController } from "react-hook-form"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -15,6 +14,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
 
 
 type BranchVersionData = {
@@ -111,7 +111,7 @@ export function BranchVersionDropdown({ data, control, name, id }: BranchVersion
                     </div>
                 </DropdownMenuContent>
             </DropdownMenu>
-            {error && <p className="text-sm text-red-500 mt-1">{error.message}</p>}
+            {error && <p className="text-[10px] font-semibold text-[#dc2626] mt-1">{error.message}</p>}
         </div>
     )
 }

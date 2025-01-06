@@ -1,20 +1,18 @@
-// src/store/workflow-store.ts
-import { create } from "zustand";
 import {
-    Node,
-    Edge,
-    applyNodeChanges,
-    applyEdgeChanges,
-    OnNodesChange,
-    OnEdgesChange,
-    Connection,
     addEdge,
+    applyEdgeChanges,
+    applyNodeChanges,
+    Connection,
+    Edge,
+    Node,
+    OnEdgesChange,
+    OnNodesChange,
     Viewport,
 } from "@xyflow/react";
 import yaml from "js-yaml";
+import { create } from "zustand";
 
 import { generateWorkflowFromData } from "@/lib/yaml";
-import { getLatestVersion, getAllVersions } from "@/lib/github";
 import { v4 } from "uuid";
 
 interface WorkflowState {
@@ -74,7 +72,6 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
         }));
     },
     onViewportChange: (viewport: Viewport) => {
-        console.log("on change", viewport);
         set({
             viewport: viewport,
         });
@@ -116,6 +113,11 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
     },
     generateWorkflow: () => {
         const state = get();
+
+        // get input values for workflow from server before generating the workflow
+
+        // validate the workflow inputs
+
         const workflow = generateWorkflowFromData(state);
         return workflow;
     },
