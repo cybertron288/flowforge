@@ -3,14 +3,14 @@
 import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { BranchVersionDropdown } from "@/components/flow/workflow-properties/dropdown";
-import { SkeletonLoader } from "@/components/flow/workflow-properties/skeleton-loader";
+import { BranchVersionDropdown } from "@/components/canvas/workflow-properties/dropdown";
+import { SkeletonLoader } from "@/components/canvas/workflow-properties/skeleton-loader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ScrollArrows from "@/components/ui/scroll-to-buttons";
 import { useDrawerStore } from "@/stores/drawer-store";
-
+import { useWorkflowStore } from "@/stores/workflow-store";
 
 interface FormValues {
     [key: string]: string; // Adjust this type based on your form's data shape
@@ -18,6 +18,7 @@ interface FormValues {
 
 export function PropertiesPanel() {
     const { isActionConfigureDrawerOpen, closeActionConfigureDrawer, actionData, workflowVersionsAndBranches, isActionDataLoading } = useDrawerStore();
+    const { updateNode } = useWorkflowStore();
 
     const { handleSubmit, control, register, formState: { errors } } = useForm<FormValues>({
         defaultValues: actionData?.actionInputs
@@ -30,6 +31,8 @@ export function PropertiesPanel() {
 
     const onSubmit = (data: FormValues, actionData: any) => {
         console.log("Form submitted with data:", data, actionData);
+
+        updateNode(actionData, data);
 
         // send data to server here
 

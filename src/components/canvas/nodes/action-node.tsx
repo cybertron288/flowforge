@@ -16,6 +16,7 @@ import { useDrawerStore } from "@/stores/drawer-store";
 import "@reach/combobox/styles.css";
 
 interface ActionNodeData {
+    id: string;
     label: string;
     actionUrl: string;
     description?: string;
@@ -26,8 +27,6 @@ interface ActionNodeData {
     selectedAction?: GitHubAction;
 }
 
-const WORKFLOW_NAME = "TruffleHog OSS";
-const WORKFLOW_DESCRIPTION = "Scan Github Actions with TruffleHog";
 const MARKETPLACE_URL_PREFIX = "https://github.com//marketplace/actions";
 
 export function ActionNode({ data, isConnectable, selected }: NodeProps<ActionNodeData>) {

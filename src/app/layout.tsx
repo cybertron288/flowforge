@@ -1,14 +1,12 @@
+"use client";
+
 import "@xyflow/react/dist/style.css";
 import { GeistSans } from "geist/font/sans";
-import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
+import Head from "next/head";
 
 import "./globals.css";
 
-
-export const metadata: Metadata = {
-  title: "FlowForge",
-  description: "Intarective github workflow generator",
-};
 
 export default function RootLayout({
   children,
@@ -16,13 +14,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" title="FlowForge">
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Intarective github workflow generator" />
+      </Head>
       <body className={` ${GeistSans.className} antialiased`}>
-        {/* <SidebarProvider defaultOpen={false}>
-          <AppSidebar /> */}
-        {children}
-        {/* <CommandPalette /> */}
-        {/* </SidebarProvider> */}
+        <SessionProvider>
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

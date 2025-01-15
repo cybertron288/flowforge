@@ -1,5 +1,7 @@
 import { pgTable, serial, text, uniqueIndex, timestamp, jsonb, integer, boolean, uuid } from 'drizzle-orm/pg-core';
 
+import { Node, Edge } from "@xyflow/react";
+
 export const users = pgTable('users', {
     id: uuid('id').primaryKey(),
     firstName: text('first_name').notNull(),
@@ -18,8 +20,8 @@ export const workflows = pgTable('workflows', {
     id: serial('id').primaryKey(),
     name: text('name').notNull(),
     description: text('description'),
-    nodes: jsonb('nodes').$type<FlowNode[]>(),
-    edges: jsonb('edges').$type<FlowEdge[]>().notNull(),
+    nodes: jsonb('nodes').$type<Node[]>(),
+    edges: jsonb('edges').$type<Edge[]>().notNull(),
     yamlContent: text('yaml_content'),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),

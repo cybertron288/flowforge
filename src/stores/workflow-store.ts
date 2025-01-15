@@ -15,6 +15,35 @@ import { create } from "zustand";
 import { generateWorkflowFromData } from "@/lib/yaml";
 import { v4 } from "uuid";
 
+interface ActionInputs {
+    description: string;
+    required: boolean;
+    default: string;
+};
+
+interface NodeObject {
+    nodeId: string;
+    uuid: string;
+    id: number;
+    name: string;
+    description: string;
+    slug: string;
+    ownerLogin: string;
+    type: "repository_action"; // if this can have other values, replace with `string`
+    color: string;
+    iconSvg: string;
+    stars: number;
+    isVerifiedOwner: boolean;
+    categories: string[]; // If categories may include other types, use `(string | OtherType)[]`
+    externalUsesPathPrefix: string;
+    globalRelayId: string;
+    createdAt: string; // Use `Date` if parsed into a JavaScript Date object
+    actionInputs: {
+        args: ActionInputs;
+    };
+    repoPath: string;
+};
+
 interface WorkflowState {
     nodes: Node[];
     edges: Edge[];
@@ -23,6 +52,7 @@ interface WorkflowState {
     onConnect: (connection: Connection) => void;
     onViewportChange: (viewport: Viewport) => void;
     addNode: (node: Node | null) => void;
+    updateNode: (node: NodeObject, nodeInputData: any) => void;
     clearWorkflow: () => void;
     exportToYAML: () => string;
     generateWorkflow: () => string;
@@ -78,16 +108,21 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
     },
     addNode: (node: Node | null) => {
         if (node) {
+            console.log("node", node);
             set((state) => ({
                 nodes: [...state?.nodes, node],
             }));
         }
     },
-    setNode: (node: Node) => {
+    updateNode: (node: NodeObject, nodeInputData: any) => {
         if (node) {
-            set((state) => ({
-                nodes: [...state?.nodes, node],
-            }));
+            console.log("updating nodeIndex", node)
+            const selectedNode = get().nodes.find((n) => n.id === node.nodeId);
+            const nodeIndex = get().nodes.findIndex((n) => n.id === node.nodeId);
+            console.log("updated nodeIndex", nodeIndex);
+            if (selectedNode && nodeIndex !== -1) {
+                get().nodes[nodeIndex].data.actionInputsData = nodeInputData;
+            }
         }
     },
     clearWorkflow: () => {
@@ -118,6 +153,7 @@ export const useWorkflowStore = create<WorkflowState>((set, get) => ({
 
         // validate the workflow inputs
 
+        console.log("generate workflow state", state);
         const workflow = generateWorkflowFromData(state);
         return workflow;
     },

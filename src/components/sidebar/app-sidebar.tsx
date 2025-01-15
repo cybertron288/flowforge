@@ -16,7 +16,7 @@ import * as React from "react"
 
 // import { NavMain } from "@/components/nav-main"
 // import { NavProjects } from "@/components/nav-projects"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { TeamSwitcher } from "@/components/sidebar/team-switcher"
 import {
     Sidebar,
     SidebarContent,

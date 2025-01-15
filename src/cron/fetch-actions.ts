@@ -1,15 +1,19 @@
 import { db } from '@/db';
 import { ActionList } from '@/db/schema';
 
+import { InferSelectModel } from 'drizzle-orm';
+
 const BATCH_SIZE = 100; // Define the size of each batch for insertion
 const MAX_RETRIES = 5; // Maximum number of retries per request
 const INITIAL_DELAY = 1000; // Initial delay in milliseconds
 
-const insertDataInBatches = async (data: typeof ActionList[]) => {
+type ActionListType = InferSelectModel<typeof ActionList>;
+
+const insertDataInBatches = async (data: ActionListType[]) => {
     console.log(`💾 Inserting ${data.length} records into the database in batches of ${BATCH_SIZE}...`);
 
     for (let i = 0; i < data.length; i += BATCH_SIZE) {
-        const batch: typeof ActionList[] = data.slice(i, i + BATCH_SIZE);
+        const batch: ActionListType[] = data.slice(i, i + BATCH_SIZE);
         try {
             await db.insert(ActionList).values(batch);
             console.log(`✅ Successfully inserted batch ${i / BATCH_SIZE + 1}`);

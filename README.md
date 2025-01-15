@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlowForge 🚀
 
-## Getting Started
+_Craft Your GitHub Workflows with Ease and Fun!_
 
-First, run the development server:
+**Description**:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+FlowForge is your interactive sidekick for building and managing GitHub workflows effortlessly. With a playful drag-and-drop interface, it transforms complex automation into a delightful experience.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Features**:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **🎨 Visual Workflow Builder**: Design workflows with an intuitive drag-and-drop interface—no coding required!
+- **🔧 Custom Node Integration**: Add personalized nodes to tailor workflows to your unique needs.
+- **✅ Real-time Validation**: Get instant feedback to ensure your workflows are error-free before deployment.
+- **🔗 Seamless GitHub Integration**: Connect directly to your GitHub repositories for smooth workflow management.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Tech Stack**:
 
-## Learn More
+- **Next.js**: React framework for server-side rendering.
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
+- **Shadcn/UI**: Reusable components built with Radix UI and Tailwind CSS.
+- **Drizzle ORM**: TypeScript-first ORM for Node.js.
+- **React Flow**: Library for building node-based interfaces.
+- **Zustand**: Fast and scalable state management for React.
 
-To learn more about Next.js, take a look at the following resources:
+**Getting Started**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the Repository**:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   git clone https://github.com/cybertron288/flowforge.git
+   ```
 
-## Deploy on Vercel
+2. **Navigate to the Project Directory**:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   cd flowforge
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Install Dependencies**:
+
+   ```bash
+   yarn install
+   ```
+
+   If you're using npm, run `npm install`.
+
+4. **Set Up Environment Variables:**
+
+   Duplicate the .env.example file and rename it to .env.local.
+
+   Update the environment variables in .env.local as needed.
+
+5. **Run Database Migrations:**
+
+   ```bash
+   npx drizzle-kit migrate
+   ```
+
+6. **Start the Development Server:**
+
+   ```bash
+   yarn dev
+   ```
+
+   Open http://localhost:3000 in your browser to access the application.
