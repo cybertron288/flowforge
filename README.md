@@ -1,3 +1,5 @@
+![Alt text](images/flowforge.jpeg)
+
 # FlowForge 🚀
 
 FlowForge is your interactive sidekick for building and managing GitHub workflows effortlessly. With a playful drag-and-drop interface, it transforms complex automation into a delightful experience.
