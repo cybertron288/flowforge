@@ -1,3 +1,5 @@
+![Alt text](images/flowforge.jpeg)
+
 # FlowForge 🚀
 
 _Craft Your GitHub Workflows with Ease and Fun!_

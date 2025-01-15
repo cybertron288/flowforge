@@ -3,7 +3,7 @@
 import { ReactFlowProvider } from "@xyflow/react";
 
 
-import { CommandPalette } from "@/components/command-palette/index.";
+import { CommandPalette } from "@/components/command-palette";
 import { WorkflowCanvas } from "@/components/canvas/workflow-canvas";
 import { PropertiesPanel } from "@/components/canvas/workflow-properties/properties-panel";
 import { Navbar } from "@/components/navbar";
