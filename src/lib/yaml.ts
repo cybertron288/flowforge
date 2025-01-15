@@ -27,6 +27,8 @@ export const generateWorkflowFromData = (data) => {
 
     const { nodes, edges } = data;
 
+    console.log("nodes", nodes, "edges", edges)
+
     // Create a map of nodes by their IDs for easy lookup
     const nodeMap = new Map(nodes.filter(node => node.type !== "start" && node.type !== "end").map((node) => [node.id, node]));
 

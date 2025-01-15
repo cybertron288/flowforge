@@ -113,11 +113,13 @@ export function CommandPalette() {
         ), "")
         const position = { x: Math.random() * 100, y: Math.random() * 100 };
 
+        const nodeId = v4();
 
         addNode({
             position,
-            id: v4(),
+            id: nodeId,
             data: {
+                nodeId,
                 ...item,
                 actionInputs,
                 repoPath,

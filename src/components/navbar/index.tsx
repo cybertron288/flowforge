@@ -17,29 +17,30 @@ export const Navbar = () => {
     const { addNode, generateWorkflow } = useWorkflowStore();
     const { data: session } = useSession();
 
-    const handleAddNode = () => {
-        const position = { x: Math.random() * 500, y: Math.random() * 300 };
-        const newNode = {
-            id: v4(),
-            type: 'action',
-            position: position,
-        }
-        // @ts-ignore
-        addNode(newNode);
-    };
+    // const handleAddNode = () => {
+    //     const position = { x: Math.random() * 500, y: Math.random() * 300 };
+    //     const newNode = {
+    //         id: v4(),
+    //         type: 'action',
+    //         position: position,
+    //         data: {}
+    //     }
+
+    //     addNode(newNode);
+    // };
 
     const handleExportYAML = () => {
         const yamlContent = generateWorkflow();
         console.log("workflow data", yamlContent)
         const blob = new Blob([yamlContent], { type: 'text/yaml' });
         const url = URL.createObjectURL(blob);
-        // const a = document.createElement('a');
-        // a.href = url;
-        // a.download = 'workflow.yaml';
-        // document.body.appendChild(a);
-        // a.click();
-        // document.body.removeChild(a);
-        // URL.revokeObjectURL(url);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'workflow.yaml';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     };
 
 
@@ -54,10 +55,10 @@ export const Navbar = () => {
                     </span>
                 </h1>
                 <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" onClick={handleAddNode}>
+                    {/* <Button variant="outline" size="sm" onClick={handleAddNode}>
                         <PlusIcon className="h-4 w-4 mr-2" />
                         New Workflow Node
-                    </Button>
+                    </Button> */}
 
                     <Button variant="outline" size="sm" onClick={handleExportYAML}>
                         <UploadIcon className="h-4 w-4 mr-2" />

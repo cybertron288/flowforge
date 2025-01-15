@@ -8,9 +8,9 @@ import { users } from '@/db/schema';
 export async function POST(req: Request) {
     const { email, newPassword } = await req.json();
 
-    const user = await db.select().from(users).where(eq(users.email, email)).get();
+    const user = await db.select().from(users).where(eq(users.email, email));
 
-    if (!user) {
+    if (user.length === 0) {
         return NextResponse.json({ success: false, message: 'User not found', data: null }, { status: 404 });
     }
 
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
     await db
         .update(users)
-        .set({ password: hashedPassword, updatedAt: new Date().toISOString() })
+        .set({ password: hashedPassword, updatedAt: new Date() })
         .where(eq(users.email, email));
 
     return NextResponse.json({ success: true, message: 'Password reset successful', data: null });

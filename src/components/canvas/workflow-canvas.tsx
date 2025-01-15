@@ -11,9 +11,9 @@ import {
 } from '@xyflow/react';
 import { useCallback } from 'react';
 
-import { ActionNode } from '@/components/flow/nodes/action-node';
-import { EndNode } from '@/components/flow/nodes/end-node';
-import { StartNode } from '@/components/flow/nodes/start-node';
+import { ActionNode } from '@/components/canvas/nodes/action-node';
+import { EndNode } from '@/components/canvas/nodes/end-node';
+import { StartNode } from '@/components/canvas/nodes/start-node';
 import { useWorkflowStore } from '@/stores/workflow-store';
 
 const nodeTypes = {
