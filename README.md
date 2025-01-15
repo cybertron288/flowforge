@@ -64,6 +64,34 @@ FlowForge is your interactive sidekick for building and managing GitHub workflow
 
 ## Contributing 🎉
 
+We love contributions! To get started:
+
+1. **Fork the repository**.
+
+2. **Create a new branch**:
+
+   ```bash
+   git checkout -b feature-name
+   ```
+
+3. **Make your changes**.
+
+4. **Commit your changes**:
+
+   ```bash
+   git commit -m 'Add feature description'
+   ```
+
+5. **Push your branch**:
+
+   ```bash
+   git push origin feature-name
+   ```
+
+6. **Create a pull request**.
+
+   Make sure to include a description of your changes and any relevant information.
+
 ## Git Conventions
 
 ### Commit messages
