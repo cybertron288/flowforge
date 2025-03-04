@@ -1,4 +1,3 @@
-// components/auth/LoginForm.tsx
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -53,12 +52,11 @@ export default function LoginForm() {
     };
 
     const handleGoogleSignIn = () => {
-        // Handle Google OAuth logic
+        // TO-DO Handle Google OAuth logic
         console.log('Google Sign-In triggered');
     };
 
     const handleGitHubSignIn = async () => {
-        // Handle GitHub OAuth logic
         const result = await signIn('github', { callbackUrl: `/dashboard` });
 
         console.log("result", result)
