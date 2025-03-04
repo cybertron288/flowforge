@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-type LoginFormInputs = {
+interface LoginFormInputs {
   email: string;
   password: string;
 };

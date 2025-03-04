@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 
 
-type BranchVersionData = {
+interface BranchVersionData {
     versions: string[];
     branches: string[];
 };

@@ -32,6 +32,8 @@ export const generateWorkflowFromData = (data) => {
     // Create a map of nodes by their IDs for easy lookup
     const nodeMap = new Map(nodes.filter(node => node.type !== "start" && node.type !== "end").map((node) => [node.id, node]));
 
+    console.log("nodeMap", nodeMap)
+
     // Get the ordered steps based on edges
     const getOrderedSteps = () => {
         const visited = new Set();

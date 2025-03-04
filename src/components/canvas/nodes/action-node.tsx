@@ -38,8 +38,6 @@ export function ActionNode({ data, isConnectable, selected }: NodeProps<ActionNo
     const { viewport } = useWorkflowStore((state) => state);
     const { openActionConfigureDrawer } = useDrawerStore();
 
-    // Calculate the inverse scale to counteract the zoom
-    const scale = viewport.zoom;
 
     useEffect(() => {
         async function searchActions() {
